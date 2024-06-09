@@ -121,7 +121,7 @@ RR_Final_Assignment$Age <- RR_Final_Assignment$age
 
 #### Analytic Plan
 
-Because we are using a binary outcome variable, myocardial infarction, logistic regression was used to evaluate its relationship with both annual out-of-pocket medical care costs and smoking. Cost of care was transformed from a continuous to a categorical variable due to practical considerations for policy development and organization. Categories were defined as \< or equal to \$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations across categories.
+Because we are using a binary outcome variable, myocardial infarction, logistic regression was used to evaluate its relationship with both annual out-of-pocket medical care costs and smoking. Cost of care was transformed from a continuous to a categorical variable due to practical considerations for policy development and organization. Categories were defined as $\leq$ \$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations across categories.
 
 ```{r}
 # Transforming Cost into Categories for Policy and Organizational Purposes
@@ -135,11 +135,11 @@ RR_Final_Assignment$CostCategories <- factor(RR_Final_Assignment$CostCategories)
 
 ##### Table 1 Overview
 
-A table 1 was created using the [**table1() package**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods"). The absolute count and percentage of each exposure category was presented for annual out-of-pocket medical care cost categories, (\<\ or equal to $9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
+A table 1 was created using the [**table1() package**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods"). The absolute count and percentage of each exposure category was presented for annual out-of-pocket medical care cost categories, ($\leq$ \$9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
 
 ##### Regression Models
 
-Crude and adjusted odds ratios with 95% confidence intervals were generated using logistic regression (`glm()`). Adjusted models included age and sex. The outcome of interest was incident myocardial infarction and the exposure for the first model was annual out-of-pocket cost of medical care (USD) category (reference group: \<\ or qual to $9800) and the second model was smoking history (history present/absent).
+Crude and adjusted odds ratios with 95% confidence intervals were generated using logistic regression (`glm()`). Adjusted models included age and sex. The outcome of interest was incident myocardial infarction and the exposure for the first model was annual out-of-pocket cost of medical care (USD) category (reference group: $\leq$ \$9800) and the second model was smoking history (history present/absent).
 
 ##### Data Visualization
 
@@ -166,7 +166,7 @@ The results of this investigation revealed that increased annual out-of-pocket c
 
 ##### Crude Model
 
-The results of the crude model indicated that having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 2.80 \[95% CI 1.65, 4.65\] when compared to the reference cost of less than or equal to \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 9.12 \[95% CI 6.45,13.17\] relative to the reference group (Table 2a).
+The results of the crude model indicated that having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 2.80 \[95% CI 1.65, 4.65\] when compared to the reference cost of $\leq$ \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 9.12 \[95% CI 6.45,13.17\] relative to the reference group (Table 2a).
 
 ```{r}
 #| output: false 
@@ -178,7 +178,7 @@ exp(cbind(OR=coef(Unadjusted_model_cost),confint(Unadjusted_model_cost)))
 
 ##### Adjusted Model
 
-After adjustment for sex and age, having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 4.50 \[95% CI 2.57, 7.71\] when compared to the reference cost of less than or equal to \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 18.12 \[95% CI 11.80, 28.25\] relative to the reference group (Figure 1, Table 2a).
+After adjustment for sex and age, having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 4.50 \[95% CI 2.57, 7.71\] when compared to the reference cost of $\leq$ \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 18.12 \[95% CI 11.80, 28.25\] relative to the reference group (Figure 1, Table 2a).
 
 ```{r}
 #| output: false 
@@ -271,7 +271,7 @@ print(forestplot_smoker)
 
 #### Data Summary and Conclusion
 
-This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual costs of \<\ or equal to $9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b).
+This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual costs of $\leq$ \$9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b).
 
 \captionsetup[table]{labelformat=empty}
 
