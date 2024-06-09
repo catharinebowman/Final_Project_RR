@@ -6,6 +6,7 @@ Created: June 2024
 Course term: Spring 2024, Stanford University 
 
 #Project and Folder Descriptions
+
 Data Folder Includes:
 - Original data ("raw-data" used in analysis), see "Cohort Description" below for more information
 Original Data Repository: <https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git>
