@@ -21,7 +21,7 @@ Repositories: [**Original Cohort Data Repository**](https://github.com/MethodsFo
 
 ## Introduction
 
-Cardiovascular disease is a major contributor to global morbidity and mortality. It is estimated that the number of cardiovascular disease cases has double over the last thirty years with 271 million cases reported in 1990 and 523 million reported in 2019 @Roth2020. In the United States alone, it was estimated that cardiovascular disease contributed to 168.2 per 100,000 deaths in 2020 and \$320 billion in healthcare spending @Xu2021; @Birger2021. Myocardial infarction, one of the leading killers among cardiovascular disease patients, is estimated to increase in its prevalence by 30.1% by 2060, emphasizing the need to better understand causes, associated risk factors, and potential points of intervention @Mohebi2022. Hence, this analysis explores the relationships between myocardial infarction, smoking, and annual out-of-pocket healthcare expenditure.
+Cardiovascular disease is a major contributor to global morbidity and mortality. It is estimated that the number of cardiovascular disease cases has doubled over the last thirty years with 271 million cases reported in 1990 and 523 million reported in 2019. @Roth2020 In the United States alone, it was estimated that cardiovascular disease contributed to 168.2 per 100,000 deaths in 2020 and \$320 billion in healthcare spending. @Xu2021; @Birger2021 Myocardial infarction, one of the leading killers among cardiovascular disease patients, is estimated to increase in its prevalence by 30.1% by 2060, emphasizing the need to better understand causes, associated risk factors, and potential points of intervention. @Mohebi2022 Hence, this analysis explores the relationships between myocardial infarction, smoking, and annual out-of-pocket healthcare expenditure.
 
 Furthermore, this report also demonstrates the various skills learned in EPI 203 Methods for Reproducible Population Health and Clinical Research. Throughout this project, I aimed to demonstrate file folder organization, version control with Github, principles of effective coding, and the generation of a reproducible and dynamic Quarto document. Peer-to-peer code review would also be an important and anticipated step outside of the context of a written assignment.
 
@@ -32,8 +32,7 @@ Furthermore, this report also demonstrates the various skills learned in EPI 203
 The following packages were used for this report: [**table1() and methods**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods"), [**arsenal()**](https://cran.r-project.org/web/packages/arsenal/index.html "arsenal package"), [**tidyverse()**](https://www.tidyverse.org/packages/ "tidyverse package"), [**dplyr()**](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html "dplyr package") and [**rmeta()**](https://cran.r-project.org/web/packages/rmeta/index.html "rmeta package").
 
 ```{r}
-#| include: false 
-#| echo: false
+#| include: false
 #| output: false 
 #| warning: false	
 library(table1)
@@ -50,24 +49,25 @@ packageVersion('tidyverse')
 packageVersion('dplyr')
 packageVersion('rmeta')
 
-# Introducing R-Environment to Support Reproducibility by Locking Packages
-renv::init()
+# Introducing Option of R-Environment to Support Reproducibility by Locking Packages
+# renv::init()
 ```
 
 #### Study Design and Dataset
 
 This is a retrospective cohort study with four assumptions (see section below, *Assumptions*).
 
-This study assesses the relationship between annual out-of-pocket costs of medical care, smoking history and myocardial infarction, as defined by variables, `cost` and `cardiac,` in the \[**cohort data set**\]((https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git "cohort dataset"). This data set includes 5,000 observations from adult aged 18-65 years and 5 variables, including `smoke`, `female`, `age`, `cardiac` and `cost`.
+This study assesses the relationship between annual out-of-pocket costs of medical care, smoking history and myocardial infarction, as defined by variables, `cost` and `cardiac,` in the [**cohort data set**](https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git "cohort dataset"). This data set includes 5,000 observations (adults aged 18-65 years) and 5 variables, including `smoke`, `female`, `age`, `cardiac` and `cost`.
 
 ##### File Read in and Initial Exploration
 
-The variables `smoke`, `female`, and `cardiac` are binary. A value of 1 represents an observation who reported female (`sex`), has previously smoked (`smoke`) or has a history of myocardial infarction (`cardiac`). A value of 0 represents a non-female participant (coded as `male` for the purposes of this analysis), no smoking history, or no incident myocardial infarction. The variables `age` (measured in years) and `cost` (measured in US dollars) are continuous variables.
+The variables `smoke`, `female`, and `cardiac` are binary. A value of 1 represents an observation who identified as female (`sex`), previously smoked (`smoke`) or had an incident myocardial infarction (`cardiac`). A value of 0 represents a non-female participant (coded as male for the purposes of this analysis), no smoking history, or no incident myocardial infarction. The variables `age` (measured in years) and `cost` (measured in US dollars) are continuous variables.
 
 ```{r}
 #| output: false 
 #File read-in to begin analysis: 
 RR_Final_Assignment <- read.csv(file="./../Data/raw-data/cohort.csv", header=TRUE, stringsAsFactors = FALSE)
+#Head used to familiarize reader with column/row structure
 head(RR_Final_Assignment)
 ```
 
@@ -75,11 +75,11 @@ head(RR_Final_Assignment)
 
 #### Assumptions
 
-We assumed the `cost` variable represents annual cost of out-of-pocket care measured in US dollars and `cardiac` represents the presence of incident myocardial infarction. Furthermore, we assumed time ordering was upheld between exposures and outcome, such that annual cost of out-of-pocket care and smoking were measured prior to the myocardial infarction outcome. Finally, we recognize several confounding factors are not accounted for in this analysis.
+We assumed the `cost` variable represents annual cost of out-of-pocket medical care measured in US dollars and `cardiac` represents the presence of incident myocardial infarction. Furthermore, we assumed time ordering was upheld between exposures and outcome, such that annual cost of out-of-pocket medical care and smoking were measured prior to the myocardial infarction outcome. Finally, we recognize several confounding factors were not accounted for in this analysis.
 
 #### Data Cleaning Procedures
 
-Data cleaning began with an initial exploration of the available date. The mean, median, and range of all continuous variables were calculated to detect extreme values (or values that are not biologically plausible, such as age=200 years). Furthermore, histograms of continuous variable were produced to assess distributional characteristics (e.g. normality). Similarly the crude count data and proportions of binary variables were calculated.
+Data cleaning began with an initial exploration of the data. The mean, median, and range of all continuous variables were calculated to detect extreme values (or values that were not biologically plausible, such as age=200 years). Furthermore, histograms of continuous variable were produced to assess distributional characteristics (e.g. normality). Similarly, crude counts and proportions of binary variables were calculated.
 
 Data processing included the transformation of categorical variables into factors and renaming for data visualization. For instance, the variable `cardiac` was re-labelled as `CardiacEvent` with categories of 'No Myocardial Infarction' for `cardiac=0` or 'Myocardial Infarction' for `cardiac=1`. The variable `female` was converted into a factor and renamed so that `female=0` indicated a male observation and `female=1` indicated a female observation. The variable `smoke` was re-labelled `Smoking` with `smoke=0` indicating a non-smoker and `smoke=1` indicated a smoker. Finally, the variable `age` was renamed `Age` for presentation.
 
@@ -94,7 +94,7 @@ summary(freqlist(~smoke,data=RR_Final_Assignment),addNA=TRUE)
 summary(freqlist(~female,data=RR_Final_Assignment),addNA=TRUE) 
 summary(freqlist(~cardiac,data=RR_Final_Assignment),addNA=TRUE) 
 
-#Assessing Distribution Visually to Ensure 
+#Assessing Distribution Visually to Familiarize Reader with Continuous Variable Distributions 
 hist(RR_Final_Assignment$cost) #Normal
 hist(RR_Final_Assignment$age) #Uniform
 
@@ -102,7 +102,7 @@ hist(RR_Final_Assignment$age) #Uniform
 RR_Final_Assignment$CardiacEvent[RR_Final_Assignment$cardiac==0]<-"No Myocardial Infarction"
 RR_Final_Assignment$CardiacEvent[RR_Final_Assignment$cardiac==1]<-"Myocardial Infarction"
 
-#Integrating Factors into Categorical Variables
+#Integrating Factors into Categorical Variables for Table Presentation
 RR_Final_Assignment$Sex <- factor(RR_Final_Assignment$female, levels=c(0,1),
          labels=c("Male", 
                   "Female"))
@@ -121,75 +121,74 @@ RR_Final_Assignment$Age <- RR_Final_Assignment$age
 
 #### Analytic Plan
 
-Because we are using a binary outcome variable, myocardial infarction, logistic regression was used to evaluate its relationship with both annual out-of-pocket medical care and smoking. Cost of care was transformed from a continuous to categorical variable due to practical considerations for policy development and organization. Categories were defined as \<\$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations.
+Because we are using a binary outcome variable, myocardial infarction, logistic regression was used to evaluate its relationship with both annual out-of-pocket medical care costs and smoking. Cost of care was transformed from a continuous to a categorical variable due to practical considerations for policy development and organization. Categories were defined as \< or equal to \$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations across categories.
 
 ```{r}
-# Transforming Cost into Categories
+# Transforming Cost into Categories for Policy and Organizational Purposes
 RR_Final_Assignment$CostCategories[RR_Final_Assignment$cost>0 & RR_Final_Assignment$cost<=9800]<-"<$9800"
 RR_Final_Assignment$CostCategories[RR_Final_Assignment$cost>9800 & RR_Final_Assignment$cost<=9950]<-"$9801-$9950"
 RR_Final_Assignment$CostCategories[RR_Final_Assignment$cost>9950]<-">$9950"
 
-# Converting to Factor
+# Converting to Factor for Table Presentation
 RR_Final_Assignment$CostCategories <- factor(RR_Final_Assignment$CostCategories)
 ```
 
 ##### Table 1 Overview
 
-A table 1 was created using the [**table1() package**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods") The absolute count and percentage of each exposure category was presented for annual out-of-pocket care cost categories, (\<\$9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
+A table 1 was created using the [**table1() package**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods"). The absolute count and percentage of each exposure category was presented for annual out-of-pocket medical care cost categories, (\<\ or equal to $9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
 
 ##### Regression Models
 
-Crude and adjusted odds ratios with 95% confidence intervals were generated using logistic regression (`glm()`). Adjusted models included age and sex. The outcome of interest was incident myocardial infarction and the exposure for the first model was annual out-of-pocket cost of care (USD) category and the second model was smoking history (history present/absent).
+Crude and adjusted odds ratios with 95% confidence intervals were generated using logistic regression (`glm()`). Adjusted models included age and sex. The outcome of interest was incident myocardial infarction and the exposure for the first model was annual out-of-pocket cost of medical care (USD) category (reference group: \<\ or qual to $9800) and the second model was smoking history (history present/absent).
 
 ##### Data Visualization
 
-Forest plots were generated using `ggplot()` and methods outlined by [**Dayimu A. (2024)**](https://cran.r-project.org/web/packages/forestploter/vignettes/forestploter-intro.html "forestploter"). Crude and adjusted odds ratios and 95% confidence intervals were stored in a new dataset, which was used in `ggplot()` for visualization.
+Forest plots were generated using `ggplot()` and methods outlined by [**Dayimu A. (2024)**](https://cran.r-project.org/web/packages/forestploter/vignettes/forestploter-intro.html "forestploter"). Crude and adjusted odds ratios and 95% confidence intervals were stored in a new dataset and visualized using `ggplot()`.
 
 ## Results
 
 #### Cohort Description and Demographics
 
-This dataset includes 5,000 observations, 4810 of which did not have a myocardial infarction reported. Approximately, 66% of individuals who had a cardiac event reported annual out-of-pocket care costs of \>\$9950, compared to 21.4% of individuals without a cardiac event documented. The majority of individuals with a cardiac event did not have a history of smoking (59.5%); a finding that was shared with the non-cardiac event group (91.0%). There were more male participants in the cardiac event group than females (90.0%). Finally, the mean age across both cardiac and non-cardiac event groups was approximately 40 years.
+This dataset included 5,000 observations, 4810 of which did not have a myocardial infarction reported. Approximately, 66% of individuals who had a myocardial infarction reported annual out-of-pocket care costs of \>\$9950, compared to 21.4% of individuals without a cardiac event documented. The majority of individuals with a myocardial infarction event did not have a history of smoking (59.5%); a finding that was shared with the non-myocardial infarction group (91.0%). There were more male participants in the myocardial infarction group than females (90.0%). Finally, the mean age across both myocardial infarction and non-myocardial infarction groups was approximately 40 years.
 
 ##### Table 1: Demographic and clinical characteristics of cohort, overall and stratified by myocardial infarction status
 
 ```{r}
 #| warning: false
 
-# Generating Table 1
-table1(~ CostCategories + Sex + Age | CardiacEvent, data=RR_Final_Assignment)
+# Generating Table 1 for Visualization
+table1(~ CostCategories + Sex + Smoking + Age | CardiacEvent, data=RR_Final_Assignment)
 ```
 
 #### Association Between Cost of Care and Myocardial Infarction
 
-The results of this investigation revealed that increased annual out-of-pocket costs of care (as defined by categories of the `cost` variable) were associated with an increased odds of having experiencing a myocardial infarction (as defined by the variable `cardiac`).
+The results of this investigation revealed that increased annual out-of-pocket costs of care (as defined by categories of the `cost` variable) were associated with an increased odds of having a myocardial infarction (as defined by the variable `cardiac`).
 
 ##### Crude Model
 
-The results of the crude model indicated that having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 2.80 \[95% CI 1.65, 4.65\] when compared to the reference cost of less than \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 9.12\[95% CI 6.45,13.17\] relative to the reference group (Table 2a).
+The results of the crude model indicated that having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 2.80 \[95% CI 1.65, 4.65\] when compared to the reference cost of less than or equal to \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 9.12 \[95% CI 6.45,13.17\] relative to the reference group (Table 2a).
 
 ```{r}
 #| output: false 
-### Using Logistic Regression to Examine Association Between Cost of Care and Myocardial Infarction ###
-# Crude
+### Using Logistic Regression to Examine Association Between Cost of Care and Myocardial Infarction
+# Crude Model and Exponentiation to Yield ORs and 95% CIs
 Unadjusted_model_cost<-glm(CardiacEvent~relevel(CostCategories, "<$9800"), data=RR_Final_Assignment, family=binomial)
 exp(cbind(OR=coef(Unadjusted_model_cost),confint(Unadjusted_model_cost)))
 ```
 
 ##### Adjusted Model
 
-After adjustment for sex and age having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an odds of myocardial infarction of 4.50\[95% CI 2.57, 7.71\] when compared to the reference cost of less than \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 18.12 \[95% CI 11.80, 28.25\] relative to the reference group (Figure 1, Table 2a).
+After adjustment for sex and age, having annual out-of-pocket care costs between \$9800 and \$9950 was associated with an increased odds of myocardial infarction of 4.50 \[95% CI 2.57, 7.71\] when compared to the reference cost of less than or equal to \$9800. Furthermore, participants with care costs greater than \$9950 had an increased odds of myocardial infarction of 18.12 \[95% CI 11.80, 28.25\] relative to the reference group (Figure 1, Table 2a).
 
 ```{r}
 #| output: false 
-### Using Logistic Regression to Examine Association Between Cost of Care and Myocardial Infarction ###
-
-# Adjusted for Age and Sex
+### Using Logistic Regression to Examine Association Between Cost of Care and Myocardial Infarction 
+# Adjusted for Age and Sex. Exponentiation to Yield ORs and 95% CIs.
 Adjusted_model_cost<-glm(CardiacEvent~relevel(CostCategories, "<$9800")+age+relevel(Sex, "Male"), data=RR_Final_Assignment, family=binomial)
 exp(cbind(OR=coef(Adjusted_model_cost),confint(Adjusted_model_cost)))
 ```
 
-##### Figure 1: Adjusted Odd Ratios of Myocardial Infarction by Annual Cost of Care (USD)
+##### Figure 1: Adjusted Odd Ratios for Relationship Between Myocardial Infarction and Annual Cost of Care (USD)
 
 ```{r}
 #Storing Adjusted ORs and CIs together for multivariable analysis 
@@ -201,7 +200,7 @@ forest_cost_aORs <- data.frame(
   UpperBound = c(7.7119774, 28.2499635),
   Confidence_Interval=c("2.5715095,11.7950445","7.7119774, 28.2499635"))
 
-#Generating Forest Plot
+#Generating Forest Plot for Figure Visualization
 forestplot_cost <- ggplot(data=forest_cost_aORs, aes(x=label, y=ORs, ymin=LowerBound, ymax=UpperBound)) +
   geom_pointrange() + 
   geom_hline(yintercept=1, lty=2) +  # add a dotted line at x=1 after flip
@@ -217,37 +216,37 @@ print(forestplot_cost)
 
 #### Association Between Smoking History and Myocardial Infarction
 
-The relationship between smoking history (as defined by the variable `smoke`) and myocardial infarction (as defined by the variable `cardiac`) were also explored.
+The relationship between smoking history (as defined by the variable `smoke`) and myocardial infarction (as defined by the variable `cardiac`) was also explored.
 
 ##### Crude Model
 
-The results of the crude model indicate that having a smoking history is associated with an odds of myocardial infarction of 6.92\[95% CI 5.08, 9.39\] when compared to non-smokers (Table 2b).
+The results of the crude model indicated that having a smoking history is associated with an increased odds of myocardial infarction of 6.92 \[95% CI 5.08, 9.39\] when compared to non-smokers (Figure 2, Table 2b).
 
 ```{r}
 #| output: false 
 ### Using Logistic Regression to Examine Association Between Smoking and Myocardial Infarction ###
-# Crude
+# Crude Model and Exponentiation to Yield ORs and 95% CIs
 Unadjusted_model_smoke<-glm(CardiacEvent~relevel(Smoking,"Non-Smoker"), data=RR_Final_Assignment, family=binomial)
 exp(cbind(OR=coef(Unadjusted_model_smoke),confint(Unadjusted_model_smoke)))
 ```
 
 ##### Adjusted Model
 
-After adjustment for sex and age, the results continued to demonstrate that having a smoking history was associated with an odds of myocardial infarction of 7.18\[95% CI 5.21, 9.84\] when compared to non-smokers (Figure 2, Table 2b).
+After adjusting for sex and age, the results continued to demonstrate that having a smoking history is associated with an odds of myocardial infarction of 7.18 \[95% CI 5.21, 9.84\] when compared to non-smokers (Figure 2, Table 2b).
 
 ```{r}
 #| output: false 
 ### Using Logistic Regression to Examine Association Between Smoking and Myocardial Infarction ###
-# Adjusted for Age and Sex
+# Adjusted for Age and Sex. Exponentiation to Yield ORs and 95% CIs.
 Adjusted_model_smoke<-glm(CardiacEvent~relevel(Smoking,"Non-Smoker")+age+relevel(Sex, "Male"), data=RR_Final_Assignment, family=binomial)
 exp(cbind(OR=coef(Adjusted_model_smoke),confint(Adjusted_model_smoke)))
 ```
 
-##### Figure 2: Odds Ratios of Myocardial Infarction by Smoking Status
+##### Figure 2: Odds Ratios for Relationship Between Myocardial Infarction and Smoking
 
 ```{r}
 ### Creating a Figure  - Smoking###
-#Storing ORs and CIs together for multivariable analysis - Smoking
+#Storing ORs and CIs together for multivariable analysis - Relationship Between MI and Smoking
 visual_smoker <- data.frame(
   ID = c(1,2),
   Measure=c("Crude OR", "Age and Sex Adjusted OR"),
@@ -256,12 +255,12 @@ visual_smoker <- data.frame(
   UpperBound = c(9.38536569, 9.8411598),
   Confidence_Interval=c("5.08417036,9.38536569","5.21491864, 9.8411598"))
 
-#Generating Forest Plot - Smoking
+#Generating Forest Plot for Data Visualization - Relationship Between MI and Smoking
 forestplot_smoker <- ggplot(data=visual_smoker, aes(x=Measure, y=ORs, ymin=LowerBound, ymax=UpperBound)) +
   geom_pointrange() + 
   geom_hline(yintercept=1, lty=2) +  # add a dotted line at x=1 after flip
   coord_flip() + 
-  xlab("OR for Smoking History Format") + ylab("OR (95% CI)") +
+  xlab("OR Format for Smoking History") + ylab("OR (95% CI)") +
   theme_bw()+
   theme(axis.text=element_text(size=8,colour="black"),
         axis.title=element_text(size=8,,colour="black",face="bold"),
@@ -272,7 +271,7 @@ print(forestplot_smoker)
 
 #### Data Summary and Conclusion
 
-This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual expenditure \<\$9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b).
+This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual costs of \<\ or equal to $9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b).
 
 \captionsetup[table]{labelformat=empty}
 
@@ -296,7 +295,7 @@ knitr::kable(table_cost,
                            "Parameter",
                            "Odds Ratio",
                            "95% Confidence Interval"),
-             caption='Table 2a: Summary Odds Ratios For Main Effect of Expenditure in Relationships Between Out-of-Pocket Care Expenditure and Myocardial   Infarction')
+             caption='Table 2a: Summary Odds Ratios For Relationship Between Annual Out-of-Pocket Care (USD) and Myocardial Infarction')
 
 # Creating a dataframe to store all ORs and confidence intervals for summary visualization
 table_smoker <- data.frame(A=c("Crude Model: Intercept", "Crude OR", "Adjusted Model: Intercept", "Adjusted OR", "Adjusted OR", "Adjusted OR"), 
@@ -310,9 +309,9 @@ knitr::kable(table_smoker,
                            "Parameter",
                            "Odds Ratio",
                            "95% Confidence Interval"),
-             caption='Table 2b: Summary Odds Ratios For Main Effect of Smoking in Relationships Between Smoking and Myocardial Infarction')
+             caption='Table 2b: Summary Odds Ratios For Relationship Between Smoking and Myocardial Infarction')
 ```
 
-Given that both smoking and increased care expenditure are associated with an increased odds of myocardial infarction, this analysis presents a potential avenue for future intervention aimed towards reducing the overall burden of cardiovascular disease.
+Given that both smoking and increased annual out-of-pocket costs of medical care are associated with an increased odds of myocardial infarction, this analysis presents a potential avenue for future intervention aimed towards reducing the overall burden of cardiovascular disease.
 
 ## References
