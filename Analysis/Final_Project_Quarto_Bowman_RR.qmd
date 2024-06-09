@@ -32,10 +32,10 @@ Furthermore, this report also demonstrates the various skills learned in EPI 203
 The following packages were used for this report: [**table1() and methods**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods"), [**arsenal()**](https://cran.r-project.org/web/packages/arsenal/index.html "arsenal package"), [**tidyverse()**](https://www.tidyverse.org/packages/ "tidyverse package"), [**dplyr()**](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html "dplyr package") and [**rmeta()**](https://cran.r-project.org/web/packages/rmeta/index.html "rmeta package").
 
 ```{r}
-# Included to suppress outputs/warnings in Quarto report for clean visualization
 #| include: false
 #| output: false 
 #| warning: false	
+# Code Above used to suppress outputs/warnings in Quarto report for clean visualization (used throughout report)
 
 # Main Package Call In for Analysis
 library(table1)
