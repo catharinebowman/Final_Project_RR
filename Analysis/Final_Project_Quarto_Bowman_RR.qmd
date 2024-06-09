@@ -1,10 +1,10 @@
 ---
-title: \small The Effects of Medical Expenditures and Smoking on the Incidence of Myocardial Infarction
-author: \small Catharine Bowman
-subtitle: \small June 10, 2024
+title: The Effects of Medical Expenditures and Smoking on the Incidence of Myocardial Infarction
+author: Catharine Bowman
+subtitle: June 10, 2024
 format: 
   pdf:
-    fontsize: "10pt"
+    fontsize: "9pt"
     header-includes:
       - \usepackage{float}
       - \floatplacement{table}{H}
@@ -17,13 +17,11 @@ execute:
 
 ## Repositories:
 
-Original data repository: [**cohort data set**](https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git "cohort dataset").
-
-Final project repository: [**repository with data, analysis, README, and Quarto Report Files**](https://github.com/catharinebowman/Final_Project_RR.git "final assignment repository").
+Repositories: [**Original Cohort Data Repository**](https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git "cohort dataset") and [**Final Project Repository with Data, Analysis, README, and Quarto Report Files**](https://github.com/catharinebowman/Final_Project_RR.git "final assignment repository").
 
 ## Introduction
 
-Cardiovascular disease is a major contributor to global morbidity and mortality. It is estimated that the number of cardiovascular disease cases has double over the last thirty years with 271 million cases reported in 1990 and 523 million reported in 2019 @Roth2020. In the United States alone, it was estimated that cardiovascular disease contributed to 168.2 per 100,000 deaths in 2020 and \$320 billion in healthcare spending @Xu2021; @Birger2021. Myocardial infarction, one of the leading killers among cardiovascular disease patients, is estimated to increase in its prevalence by 30.1\$% by 2060, emphasizing the need to better understand causes, associated risk factors, and potential points of intervention @Mohebi2022. Hence, the goal of this analysis was to explore the relationships between myocardial infarction, smoking, and annual out-of-pocket healthcare expenditure.
+Cardiovascular disease is a major contributor to global morbidity and mortality. It is estimated that the number of cardiovascular disease cases has double over the last thirty years with 271 million cases reported in 1990 and 523 million reported in 2019 @Roth2020. In the United States alone, it was estimated that cardiovascular disease contributed to 168.2 per 100,000 deaths in 2020 and \$320 billion in healthcare spending @Xu2021; @Birger2021. Myocardial infarction, one of the leading killers among cardiovascular disease patients, is estimated to increase in its prevalence by 30.1% by 2060, emphasizing the need to better understand causes, associated risk factors, and potential points of intervention @Mohebi2022. Hence, this analysis explores the relationships between myocardial infarction, smoking, and annual out-of-pocket healthcare expenditure.
 
 Furthermore, this report also demonstrates the various skills learned in EPI 203 Methods for Reproducible Population Health and Clinical Research. Throughout this project, I aimed to demonstrate file folder organization, version control with Github, principles of effective coding, and the generation of a reproducible and dynamic Quarto document. Peer-to-peer code review would also be an important and anticipated step outside of the context of a written assignment.
 
@@ -58,7 +56,7 @@ renv::init()
 
 #### Study Design and Dataset
 
-This study employs a retrospective cohort design, based upon four assumptions (see section below, *Assumptions*).
+This is a retrospective cohort study with four assumptions (see section below, *Assumptions*).
 
 This study assesses the relationship between annual out-of-pocket costs of medical care, smoking history and myocardial infarction, as defined by variables, `cost` and `cardiac,` in the [**cohort data set**](https://github.com/catharinebowman/Assignment7.git "cohort dataset"). This data set includes 5,000 observations from adult aged 18-65 years and 5 variables, including `smoke`, `female`, `age`, `cardiac` and `cost`.
 
@@ -67,6 +65,7 @@ This study assesses the relationship between annual out-of-pocket costs of medic
 The variables `smoke`, `female`, and `cardiac` are binary. A value of 1 represents an observation who reported female (`sex`), has previously smoked (`smoke`) or has a history of myocardial infarction (`cardiac`). A value of 0 represents a non-female participant (coded as `male` for the purposes of this analysis), no smoking history, or no incident myocardial infarction. The variables `age` (measured in years) and `cost` (measured in US dollars) are continuous variables.
 
 ```{r}
+#| output: false 
 #File read-in to begin analysis: 
 RR_Final_Assignment <- read.csv(file="./../Data/raw-data/cohort.csv", header=TRUE, stringsAsFactors = FALSE)
 head(RR_Final_Assignment)
@@ -155,6 +154,8 @@ This dataset includes 5,000 observations, 4810 of which did not have a myocardia
 ##### Table 1: Demographic and clinical characteristics of cohort, overall and stratified by myocardial infarction status
 
 ```{r}
+#| warning: false
+
 # Generating Table 1
 table1(~ CostCategories + Sex + Age | CardiacEvent, data=RR_Final_Assignment)
 ```
