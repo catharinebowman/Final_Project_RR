@@ -35,11 +35,15 @@ The following packages were used for this report: [**table1() and methods**](htt
 #| include: false
 #| output: false 
 #| warning: false	
+
+# Main Package Call In for Analysis
 library(table1)
 library(arsenal)
 library(tidyverse)
 library(dplyr)
 library(rmeta)
+library(rmarkdown)
+library(yaml)
 
 # Using sessionInfo and packageVersion to Retrieve Information about Current Package and Session Versions
 sessionInfo()
