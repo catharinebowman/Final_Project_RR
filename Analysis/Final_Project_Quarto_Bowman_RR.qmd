@@ -58,7 +58,7 @@ renv::init()
 
 This is a retrospective cohort study with four assumptions (see section below, *Assumptions*).
 
-This study assesses the relationship between annual out-of-pocket costs of medical care, smoking history and myocardial infarction, as defined by variables, `cost` and `cardiac,` in the [**cohort data set**](https://github.com/catharinebowman/Assignment7.git "cohort dataset"). This data set includes 5,000 observations from adult aged 18-65 years and 5 variables, including `smoke`, `female`, `age`, `cardiac` and `cost`.
+This study assesses the relationship between annual out-of-pocket costs of medical care, smoking history and myocardial infarction, as defined by variables, `cost` and `cardiac,` in the \[**cohort data set**\]((https://github.com/MethodsForReproducibleHealthResearch/Assignment7.git "cohort dataset"). This data set includes 5,000 observations from adult aged 18-65 years and 5 variables, including `smoke`, `female`, `age`, `cardiac` and `cost`.
 
 ##### File Read in and Initial Exploration
 
@@ -135,7 +135,7 @@ RR_Final_Assignment$CostCategories <- factor(RR_Final_Assignment$CostCategories)
 
 ##### Table 1 Overview
 
-A table 1 was created using the [@table1]package. The absolute count and percentage of each exposure category was presented for annual out-of-pocket care cost categories, (\<\$9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
+A table 1 was created using the [**table1() package**](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html "table 1 package and methods") The absolute count and percentage of each exposure category was presented for annual out-of-pocket care cost categories, (\<\$9800, \$9801-\$9950, and \>\$9950), smoking history (non-smoker and smoker), and sex (male and female). The mean (with standard deviation) and median (with minimum and maximum) were reported for age. Each metric was presented for the overall cohort (n=5000) and stratified by myocardial infarction status.
 
 ##### Regression Models
 
@@ -143,7 +143,7 @@ Crude and adjusted odds ratios with 95% confidence intervals were generated usin
 
 ##### Data Visualization
 
-Forest plots were generated using `ggplot()` and methods outlined by Dayimu A. (2024), "Introduction to forestploter", cran.r-project. Crude and adjusted odds ratios and 95% confidence intervals were stored in a new dataset, which was used in `ggplot()` for visualization.
+Forest plots were generated using `ggplot()` and methods outlined by [**Dayimu A. (2024)**](https://cran.r-project.org/web/packages/forestploter/vignettes/forestploter-intro.html "forestploter"). Crude and adjusted odds ratios and 95% confidence intervals were stored in a new dataset, which was used in `ggplot()` for visualization.
 
 ## Results
 
@@ -272,7 +272,7 @@ print(forestplot_smoker)
 
 #### Data Summary and Conclusion
 
-This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual expenditure \<\$9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b). Given that both smoking and increased care expenditure are associated with an increased odds of myocardial infarction, this analysis presents a potential avenue for future intervention aimed towards reducing the overall burden of cardiovascular disease.
+This analysis demonstrated evidence of increased odds of myocardial infarction among adults with higher annual out-of-pocket costs of care (relative to annual expenditure \<\$9800) and among smokers (compared to non-smokers). This finding was consistent across crude and age- and sex-adjusted models (Tables 2a and 2b).
 
 \captionsetup[table]{labelformat=empty}
 
@@ -312,5 +312,7 @@ knitr::kable(table_smoker,
                            "95% Confidence Interval"),
              caption='Table 2b: Summary Odds Ratios For Main Effect of Smoking in Relationships Between Smoking and Myocardial Infarction')
 ```
+
+Given that both smoking and increased care expenditure are associated with an increased odds of myocardial infarction, this analysis presents a potential avenue for future intervention aimed towards reducing the overall burden of cardiovascular disease.
 
 ## References
