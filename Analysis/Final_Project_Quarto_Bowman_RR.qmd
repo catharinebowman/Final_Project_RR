@@ -126,7 +126,7 @@ RR_Final_Assignment$Age <- RR_Final_Assignment$age
 
 #### Analytic Plan
 
-Because we are using a binary outcome variable, myocardial infarction, logistic regression was used to evaluate its relationship with both annual out-of-pocket medical care costs and smoking. Cost of care was transformed from a continuous to a categorical variable due to practical considerations for policy development and organization. Categories were defined as $\leq$ \$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations across categories.
+Because we are using a binary outcome variable, myocardial infarction, logistic regression (e.g. $log(odds_{MI})=\alpha + \beta_{smoking}\times x_{smoking}$) was used to evaluate its relationship with both annual out-of-pocket medical care costs and smoking. Cost of care was transformed from a continuous to a categorical variable due to practical considerations for policy development and organization. Categories were defined as $\leq$ \$9800, \$9801-\$9950, and \>\$9950 to minimize data sparsity and optimize equal distribution of observations across categories.
 
 ```{r}
 # Transforming Cost into Categories for Policy and Organizational Purposes
